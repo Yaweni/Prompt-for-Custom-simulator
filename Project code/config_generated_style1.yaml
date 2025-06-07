@@ -1,0 +1,833 @@
+simulation_runs:
+- run_id: Style1-WideP_pps-60000_fw-8000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 60000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 8000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW1
+    scrubber2_id: SW2
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-GoodQ_pps-60000_fw-8000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 60000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 8000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW3
+    scrubber2_id: SW4
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-WideP_pps-60000_fw-12000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 60000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 12000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW1
+    scrubber2_id: SW2
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-GoodQ_pps-60000_fw-12000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 60000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 12000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW3
+    scrubber2_id: SW4
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-WideP_pps-180000_fw-8000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 180000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 8000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW1
+    scrubber2_id: SW2
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-GoodQ_pps-180000_fw-8000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 180000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 8000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW3
+    scrubber2_id: SW4
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-WideP_pps-180000_fw-12000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 180000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 12000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW1
+    scrubber2_id: SW2
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-GoodQ_pps-180000_fw-12000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 180000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 12000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW3
+    scrubber2_id: SW4
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-WideP_pps-250000_fw-8000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 250000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 8000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW1
+    scrubber2_id: SW2
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-GoodQ_pps-250000_fw-8000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 250000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 8000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW3
+    scrubber2_id: SW4
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-WideP_pps-250000_fw-12000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 250000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 12000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW1
+    scrubber2_id: SW2
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-GoodQ_pps-250000_fw-12000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 250000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 12000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW3
+    scrubber2_id: SW4
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-WideP_pps-350000_fw-8000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 350000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 8000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW1
+    scrubber2_id: SW2
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-GoodQ_pps-350000_fw-8000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 350000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 8000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW3
+    scrubber2_id: SW4
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-WideP_pps-350000_fw-12000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 350000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 12000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW1
+    scrubber2_id: SW2
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+- run_id: Style1-GoodQ_pps-350000_fw-12000
+  duration_seconds: 10
+  scenario_type: Distributed
+  legitimate_traffic:
+    request_interval_ms: 50
+    request_size_bytes: 1024
+    reply_size_bytes: 4096
+    server_processing_delay_ms: 10
+  attack_traffic:
+    present: true
+    style: ATTACK_STYLE_1
+    num_total_attackers: 30
+    attack_packet_size_bytes: 512
+    total_attack_pps: 350000
+  network_links:
+    default_bandwidth_bps: 100000000
+    default_propagation_delay_ms: 0.01
+  firewall_centralized:
+    queue_max_bytes: 10000000
+    interface_speed_bps: 10000000
+    processing_capacity_pps: 12000
+  server_config:
+    queue_max_bytes: 5000000
+    link_to_switch_bw_bps: 100000000
+  distributed_mitigation:
+    scrubber1_id: SW3
+    scrubber2_id: SW4
+    scrubber_configs:
+      SW1:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW2:
+        type: WidePipe
+        bandwidth_bps: 10000000
+        queue_max_bytes: 1000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW3:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001
+      SW4:
+        type: GoodQueue
+        bandwidth_bps: 1000000
+        queue_max_bytes: 10000000
+        processing_delay_ms: 0.0002
+        scrubber_processing_delay_ms: 0.001

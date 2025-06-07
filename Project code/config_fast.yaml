@@ -1,0 +1,82 @@
+simulation_runs:
+  - run_id: "FAST_Baseline_NoAttack"
+    # 1. Drastically reduce simulation duration
+    duration_seconds: 10 # Was 30
+    scenario_type: "NoMitigation"
+    legitimate_traffic:
+      # 2. Generate fewer legitimate packets
+      request_interval_ms: 200 # Was 50
+      request_size_bytes: 1024
+      reply_size_bytes: 4096
+      server_processing_delay_ms: 10
+    attack_traffic:
+      present: False
+      style: "None"
+      num_total_attackers: 0
+      total_attack_pps: 0
+      attack_packet_size_bytes: 512
+    network_links:
+      default_bandwidth_bps: 1_000_000
+      default_propagation_delay_ms: 0.01
+    server_config:
+      queue_max_bytes: 5_000
+      link_to_switch_bw_bps: 1_000_000
+
+  - run_id: "FAST_Centralized_Attack_Style1"
+    duration_seconds: 10 # Was 30
+    scenario_type: "Centralized"
+    legitimate_traffic:
+      request_interval_ms: 200 # Was 50
+      request_size_bytes: 1024
+      reply_size_bytes: 4096
+      server_processing_delay_ms: 10
+    attack_traffic:
+      present: True
+      style: "ATTACK_STYLE_1"
+      num_total_attackers: 30
+      # 3. Drastically reduce attack traffic volume
+      total_attack_pps: 15000 # Was 150000
+      attack_packet_size_bytes: 512
+    network_links:
+      default_bandwidth_bps: 1_000_000
+      default_propagation_delay_ms: 0.01
+    firewall_centralized:
+      queue_max_bytes: 1_000_000
+      interface_speed_bps: 1_000_000
+      processing_capacity_pps: 10000
+    server_config:
+      queue_max_bytes: 500_000
+      link_to_switch_bw_bps: 1_000_000
+
+  - run_id: "FAST_Distributed_Style1_Adequate"
+    duration_seconds: 10 # Was 30
+    scenario_type: "Distributed"
+    legitimate_traffic:
+      request_interval_ms: 200 # Was 50
+      request_size_bytes: 1024
+      reply_size_bytes: 4096
+      server_processing_delay_ms: 10
+    attack_traffic:
+      present: True
+      style: "ATTACK_STYLE_1"
+      num_total_attackers: 30
+      total_attack_pps: 15000 # Was 150000
+      attack_packet_size_bytes: 512
+    network_links:
+      default_bandwidth_bps: 1_000_000
+      default_propagation_delay_ms: 0.01
+    firewall_centralized:
+      queue_max_bytes: 1_000_000
+      interface_speed_bps: 1_000_000
+      processing_capacity_pps: 10000
+    distributed_mitigation:
+      scrubber1_id: "SW1"
+      scrubber2_id: "SW2"
+      scrubber_configs:
+        SW1: { type: "WidePipe", bandwidth_bps: 3_000_000, queue_max_bytes: 1_000_00 }
+        SW2: { type: "WidePipe", bandwidth_bps: 3_000_000, queue_max_bytes: 1_000_00 }
+        SW3: { type: "GoodQueue", bandwidth_bps: 500_000, queue_max_bytes: 2_000_000 }
+        SW4: { type: "GoodQueue", bandwidth_bps: 500_000, queue_max_bytes: 2_000_000 }
+    server_config:
+      queue_max_bytes: 500_000
+      link_to_switch_bw_bps: 1_000_000

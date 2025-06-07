@@ -1,0 +1,172 @@
+simulation_runs:
+
+  # ====================================================================
+  # -- LEVEL 1: LOW CAPACITY (1 Mbps Scale)
+  # ====================================================================
+  - run_id: "LOW_CAP_Baseline_Attack_Style1"
+    duration_seconds: 10
+    scenario_type: "NoMitigation"
+    legitimate_traffic: {request_interval_ms: 200, request_size_bytes: 1024, reply_size_bytes: 4096, server_processing_delay_ms: 10}
+    attack_traffic: {present: True, style: "ATTACK_STYLE_1", num_total_attackers: 30, attack_packet_size_bytes: 512, total_attack_pps: 250}
+    network_links: {default_bandwidth_bps: 1_000_000, default_propagation_delay_ms: 0.01}
+    server_config: {queue_max_bytes: 50_000, link_to_switch_bw_bps: 1_000_000}
+
+  # ====================================================================
+  # -- LEVEL 2: MEDIUM CAPACITY (10 Mbps Scale) - Detailed Comparison
+  # ====================================================================
+  - run_id: "MED_CAP_Centralized_Attack_Style1"
+    duration_seconds: 10
+    scenario_type: "Centralized"
+    legitimate_traffic: {request_interval_ms: 200, request_size_bytes: 1024, reply_size_bytes: 4096, server_processing_delay_ms: 10}
+    attack_traffic: {present: True, style: "ATTACK_STYLE_1", num_total_attackers: 30, attack_packet_size_bytes: 512, total_attack_pps: 2500}
+    network_links: {default_bandwidth_bps: 10_000_000, default_propagation_delay_ms: 0.01}
+    firewall_centralized: {queue_max_bytes: 1_000_000, interface_speed_bps: 10_000_000, processing_capacity_pps: 5000}
+    server_config: {queue_max_bytes: 500_000, link_to_switch_bw_bps: 10_000_000}
+
+  - run_id: "MED_CAP_Centralized_Attack_Style2"
+    duration_seconds: 10
+    scenario_type: "Centralized"
+    legitimate_traffic: {request_interval_ms: 200, request_size_bytes: 1024, reply_size_bytes: 4096, server_processing_delay_ms: 10}
+    attack_traffic: {present: True, style: "ATTACK_STYLE_2", num_total_attackers: 30, attack_packet_size_bytes: 1024, total_attack_pps: 1000}
+    network_links: {default_bandwidth_bps: 10_000_000, default_propagation_delay_ms: 0.01}
+    firewall_centralized: {queue_max_bytes: 1_000_000, interface_speed_bps: 10_000_000, processing_capacity_pps: 800}
+    server_config: {queue_max_bytes: 500_000, link_to_switch_bw_bps: 10_000_000}
+
+  - run_id: "MED_CAP_Dist_Style1_Adequate"
+    duration_seconds: 10
+    scenario_type: "Distributed"
+    legitimate_traffic: {request_interval_ms: 200, request_size_bytes: 1024, reply_size_bytes: 4096, server_processing_delay_ms: 10}
+    attack_traffic: {present: True, style: "ATTACK_STYLE_1", num_total_attackers: 30, attack_packet_size_bytes: 512, total_attack_pps: 2500}
+    network_links: {default_bandwidth_bps: 10_000_000, default_propagation_delay_ms: 0.01}
+    firewall_centralized: {queue_max_bytes: 1_000_000, interface_speed_bps: 10_000_000, processing_capacity_pps: 5000}
+    server_config: {queue_max_bytes: 500_000, link_to_switch_bw_bps: 10_000_000}
+    distributed_mitigation:
+      scrubber1_id: "SW1"
+      scrubber2_id: "SW2"
+      scrubber_configs:
+        SW1: {type: "WidePipe", bandwidth_bps: 10_000_000, queue_max_bytes: 100_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW2: {type: "WidePipe", bandwidth_bps: 10_000_000, queue_max_bytes: 100_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW3: {type: "GoodQueue", bandwidth_bps: 1_000_000, queue_max_bytes: 2_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+        SW4: {type: "GoodQueue", bandwidth_bps: 1_000_000, queue_max_bytes: 2_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+
+  - run_id: "MED_CAP_Dist_Style1_Inadequate"
+    duration_seconds: 10
+    scenario_type: "Distributed"
+    legitimate_traffic: {request_interval_ms: 200, request_size_bytes: 1024, reply_size_bytes: 4096, server_processing_delay_ms: 10}
+    attack_traffic: {present: True, style: "ATTACK_STYLE_1", num_total_attackers: 30, attack_packet_size_bytes: 512, total_attack_pps: 2500}
+    network_links: {default_bandwidth_bps: 10_000_000, default_propagation_delay_ms: 0.01}
+    firewall_centralized: {queue_max_bytes: 1_000_000, interface_speed_bps: 10_000_000, processing_capacity_pps: 5000}
+    server_config: {queue_max_bytes: 500_000, link_to_switch_bw_bps: 10_000_000}
+    distributed_mitigation:
+      scrubber1_id: "SW3"
+      scrubber2_id: "SW4"
+      scrubber_configs:
+        SW1: {type: "WidePipe", bandwidth_bps: 10_000_000, queue_max_bytes: 100_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW2: {type: "WidePipe", bandwidth_bps: 10_000_000, queue_max_bytes: 100_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW3: {type: "GoodQueue", bandwidth_bps: 1_000_000, queue_max_bytes: 2_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+        SW4: {type: "GoodQueue", bandwidth_bps: 1_000_000, queue_max_bytes: 2_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+
+  - run_id: "MED_CAP_Dist_Style2_Adequate"
+    duration_seconds: 10
+    scenario_type: "Distributed"
+    legitimate_traffic: {request_interval_ms: 200, request_size_bytes: 1024, reply_size_bytes: 4096, server_processing_delay_ms: 10}
+    attack_traffic: {present: True, style: "ATTACK_STYLE_2", num_total_attackers: 30, attack_packet_size_bytes: 1024, total_attack_pps: 1000}
+    network_links: {default_bandwidth_bps: 10_000_000, default_propagation_delay_ms: 0.01}
+    firewall_centralized: {queue_max_bytes: 1_000_000, interface_speed_bps: 10_000_000, processing_capacity_pps: 800}
+    server_config: {queue_max_bytes: 500_000, link_to_switch_bw_bps: 10_000_000}
+    distributed_mitigation:
+      scrubber1_id: "SW3"
+      scrubber2_id: "SW4"
+      scrubber_configs:
+        SW1: {type: "WidePipe", bandwidth_bps: 10_000_000, queue_max_bytes: 100_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW2: {type: "WidePipe", bandwidth_bps: 10_000_000, queue_max_bytes: 100_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW3: {type: "GoodQueue", bandwidth_bps: 1_000_000, queue_max_bytes: 2_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+        SW4: {type: "GoodQueue", bandwidth_bps: 1_000_000, queue_max_bytes: 2_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+        
+  - run_id: "MED_CAP_Dist_Style2_Inadequate"
+    duration_seconds: 10
+    scenario_type: "Distributed"
+    legitimate_traffic: {request_interval_ms: 200, request_size_bytes: 1024, reply_size_bytes: 4096, server_processing_delay_ms: 10}
+    attack_traffic: {present: True, style: "ATTACK_STYLE_2", num_total_attackers: 30, attack_packet_size_bytes: 1024, total_attack_pps: 1000}
+    network_links: {default_bandwidth_bps: 10_000_000, default_propagation_delay_ms: 0.01}
+    firewall_centralized: {queue_max_bytes: 1_000_000, interface_speed_bps: 10_000_000, processing_capacity_pps: 800}
+    server_config: {queue_max_bytes: 500_000, link_to_switch_bw_bps: 10_000_000}
+    distributed_mitigation:
+      scrubber1_id: "SW1"
+      scrubber2_id: "SW2"
+      scrubber_configs:
+        SW1: {type: "WidePipe", bandwidth_bps: 10_000_000, queue_max_bytes: 100_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW2: {type: "WidePipe", bandwidth_bps: 10_000_000, queue_max_bytes: 100_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW3: {type: "GoodQueue", bandwidth_bps: 1_000_000, queue_max_bytes: 2_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+        SW4: {type: "GoodQueue", bandwidth_bps: 1_000_000, queue_max_bytes: 2_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+
+  # ====================================================================
+  # -- LEVEL 3: HIGH CAPACITY (100 Mbps Scale) - FULL SUITE
+  # ====================================================================
+  - run_id: "HIGH_CAP_Dist_Style1_Adequate"
+    duration_seconds: 10
+    scenario_type: "Distributed"
+    legitimate_traffic: {request_interval_ms: 200, request_size_bytes: 1024, reply_size_bytes: 4096, server_processing_delay_ms: 10}
+    attack_traffic: {present: True, style: "ATTACK_STYLE_1", num_total_attackers: 30, attack_packet_size_bytes: 512, total_attack_pps: 25000}
+    network_links: {default_bandwidth_bps: 100_000_000, default_propagation_delay_ms: 0.01}
+    firewall_centralized: {queue_max_bytes: 10_000_000, interface_speed_bps: 100_000_000, processing_capacity_pps: 50000}
+    server_config: {queue_max_bytes: 5_000_000, link_to_switch_bw_bps: 100_000_000}
+    distributed_mitigation:
+      scrubber1_id: "SW1"
+      scrubber2_id: "SW2"
+      scrubber_configs:
+        SW1: {type: "WidePipe", bandwidth_bps: 100_000_000, queue_max_bytes: 1_000_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW2: {type: "WidePipe", bandwidth_bps: 100_000_000, queue_max_bytes: 1_000_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW3: {type: "GoodQueue", bandwidth_bps: 10_000_000, queue_max_bytes: 20_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+        SW4: {type: "GoodQueue", bandwidth_bps: 10_000_000, queue_max_bytes: 20_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+
+  - run_id: "HIGH_CAP_Dist_Style1_Inadequate"
+    duration_seconds: 10
+    scenario_type: "Distributed"
+    legitimate_traffic: {request_interval_ms: 200, request_size_bytes: 1024, reply_size_bytes: 4096, server_processing_delay_ms: 10}
+    attack_traffic: {present: True, style: "ATTACK_STYLE_1", num_total_attackers: 30, attack_packet_size_bytes: 512, total_attack_pps: 25000}
+    network_links: {default_bandwidth_bps: 100_000_000, default_propagation_delay_ms: 0.01}
+    firewall_centralized: {queue_max_bytes: 10_000_000, interface_speed_bps: 100_000_000, processing_capacity_pps: 50000}
+    server_config: {queue_max_bytes: 5_000_000, link_to_switch_bw_bps: 100_000_000}
+    distributed_mitigation:
+      scrubber1_id: "SW3"
+      scrubber2_id: "SW4"
+      scrubber_configs:
+        SW1: {type: "WidePipe", bandwidth_bps: 100_000_000, queue_max_bytes: 1_000_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW2: {type: "WidePipe", bandwidth_bps: 100_000_000, queue_max_bytes: 1_000_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW3: {type: "GoodQueue", bandwidth_bps: 10_000_000, queue_max_bytes: 20_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+        SW4: {type: "GoodQueue", bandwidth_bps: 10_000_000, queue_max_bytes: 20_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+
+  - run_id: "HIGH_CAP_Dist_Style2_Adequate"
+    duration_seconds: 10
+    scenario_type: "Distributed"
+    legitimate_traffic: {request_interval_ms: 200, request_size_bytes: 1024, reply_size_bytes: 4096, server_processing_delay_ms: 10}
+    attack_traffic: {present: True, style: "ATTACK_STYLE_2", num_total_attackers: 30, attack_packet_size_bytes: 1024, total_attack_pps: 10000}
+    network_links: {default_bandwidth_bps: 100_000_000, default_propagation_delay_ms: 0.01}
+    firewall_centralized: {queue_max_bytes: 10_000_000, interface_speed_bps: 100_000_000, processing_capacity_pps: 8000}
+    server_config: {queue_max_bytes: 5_000_000, link_to_switch_bw_bps: 100_000_000}
+    distributed_mitigation:
+      scrubber1_id: "SW3"
+      scrubber2_id: "SW4"
+      scrubber_configs:
+        SW1: {type: "WidePipe", bandwidth_bps: 100_000_000, queue_max_bytes: 1_000_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW2: {type: "WidePipe", bandwidth_bps: 100_000_000, queue_max_bytes: 1_000_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW3: {type: "GoodQueue", bandwidth_bps: 10_000_000, queue_max_bytes: 20_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+        SW4: {type: "GoodQueue", bandwidth_bps: 10_000_000, queue_max_bytes: 20_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+
+  - run_id: "HIGH_CAP_Dist_Style2_Inadequate"
+    duration_seconds: 10
+    scenario_type: "Distributed"
+    legitimate_traffic: {request_interval_ms: 200, request_size_bytes: 1024, reply_size_bytes: 4096, server_processing_delay_ms: 10}
+    attack_traffic: {present: True, style: "ATTACK_STYLE_2", num_total_attackers: 30, attack_packet_size_bytes: 1024, total_attack_pps: 10000}
+    network_links: {default_bandwidth_bps: 100_000_000, default_propagation_delay_ms: 0.01}
+    firewall_centralized: {queue_max_bytes: 10_000_000, interface_speed_bps: 100_000_000, processing_capacity_pps: 8000}
+    server_config: {queue_max_bytes: 5_000_000, link_to_switch_bw_bps: 100_000_000}
+    distributed_mitigation:
+      scrubber1_id: "SW1"
+      scrubber2_id: "SW2"
+      scrubber_configs:
+        SW1: {type: "WidePipe", bandwidth_bps: 100_000_000, queue_max_bytes: 1_000_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW2: {type: "WidePipe", bandwidth_bps: 100_000_000, queue_max_bytes: 1_000_000, processing_delay_ms: 0.001, scrubber_processing_delay_ms: 0.05}
+        SW3: {type: "GoodQueue", bandwidth_bps: 10_000_000, queue_max_bytes: 20_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}
+        SW4: {type: "GoodQueue", bandwidth_bps: 10_000_000, queue_max_bytes: 20_000_000, processing_delay_ms: 0.0002, scrubber_processing_delay_ms: 0.001}

@@ -1,0 +1,191 @@
+simulation_runs:
+  - run_id: "Baseline_NoAttack"
+    duration_seconds: 30
+    scenario_type: "NoMitigation"
+    legitimate_traffic:
+      request_interval_ms: 50
+      request_size_bytes: 1024
+      reply_size_bytes: 4096
+      server_processing_delay_ms: 10
+    attack_traffic:
+      present: False
+      style: "None"
+      num_total_attackers: 0
+      total_attack_pps: 0
+      attack_packet_size_bytes: 512
+    network_links:
+      default_bandwidth_bps: 1_000_000_000 # 1 Gbps
+      default_propagation_delay_ms: 0.1
+    server_config:
+      queue_max_bytes: 500_000
+      link_to_switch_bw_bps: 1_000_000_000
+
+  - run_id: "Baseline_With_Attack_Style1"
+    duration_seconds: 30
+    scenario_type: "NoMitigation"
+    legitimate_traffic:
+      request_interval_ms: 50
+      request_size_bytes: 1024
+      reply_size_bytes: 4096
+      server_processing_delay_ms: 10
+    attack_traffic:
+      present: True
+      style: "ATTACK_STYLE_1"
+      num_total_attackers: 30
+      total_attack_pps: 150000 # High volume, low processing
+      attack_packet_size_bytes: 512
+    network_links:
+      default_bandwidth_bps: 1_000_000_000
+      default_propagation_delay_ms: 0.1
+    server_config:
+      queue_max_bytes: 500_000
+      link_to_switch_bw_bps: 1_000_000_000
+
+  - run_id: "Centralized_Attack_Style1"
+    duration_seconds: 30
+    scenario_type: "Centralized"
+    legitimate_traffic:
+      request_interval_ms: 50
+      request_size_bytes: 1024
+      reply_size_bytes: 4096
+      server_processing_delay_ms: 10
+    attack_traffic:
+      present: True
+      style: "ATTACK_STYLE_1"
+      num_total_attackers: 30
+      total_attack_pps: 150000
+      attack_packet_size_bytes: 512
+    network_links:
+      default_bandwidth_bps: 1_000_000_000
+      default_propagation_delay_ms: 0.1
+    firewall_centralized:
+      queue_max_bytes: 2_000_000
+      interface_speed_bps: 2_000_000_000 # 2 Gbps
+      processing_capacity_pps: 200000
+    server_config:
+      queue_max_bytes: 500_000
+      link_to_switch_bw_bps: 1_000_000_000
+
+  - run_id: "Distributed_Style1_AdequateScrubbers"
+    duration_seconds: 30
+    scenario_type: "Distributed"
+    legitimate_traffic:
+      request_interval_ms: 50
+      request_size_bytes: 1024
+      reply_size_bytes: 4096
+      server_processing_delay_ms: 10
+    attack_traffic:
+      present: True
+      style: "ATTACK_STYLE_1"
+      num_total_attackers: 30
+      total_attack_pps: 150000
+      attack_packet_size_bytes: 512
+    network_links:
+      default_bandwidth_bps: 10_000_000_000 # 10 Gbps backbone
+      default_propagation_delay_ms: 0.1
+    firewall_centralized:
+      queue_max_bytes: 2_000_000
+      interface_speed_bps: 2_000_000_000 # 2 Gbps
+      processing_capacity_pps: 200000
+    distributed_mitigation:
+      scrubber1_id: "SW1"
+      scrubber2_id: "SW2"
+      scrubber_configs:
+        SW1: { type: "WidePipe", bandwidth_bps: 5_000_000_000, queue_max_bytes: 100_000 }
+        SW2: { type: "WidePipe", bandwidth_bps: 5_000_000_000, queue_max_bytes: 100_000 }
+        SW3: { type: "GoodQueue", bandwidth_bps: 500_000_000, queue_max_bytes: 2_000_000 }
+        SW4: { type: "GoodQueue", bandwidth_bps: 500_000_000, queue_max_bytes: 2_000_000 }
+    server_config:
+      queue_max_bytes: 500_000
+      link_to_switch_bw_bps: 10_000_000_000
+
+  - run_id: "Distributed_Style1_InadequateScrubbers"
+    duration_seconds: 30
+    scenario_type: "Distributed"
+    legitimate_traffic:
+      request_interval_ms: 50
+      request_size_bytes: 1024
+      reply_size_bytes: 4096
+      server_processing_delay_ms: 10
+    attack_traffic:
+      present: True
+      style: "ATTACK_STYLE_1"
+      num_total_attackers: 30
+      total_attack_pps: 150000
+      attack_packet_size_bytes: 512
+    network_links:
+      default_bandwidth_bps: 10_000_000_000
+      default_propagation_delay_ms: 0.1
+    firewall_centralized:
+      queue_max_bytes: 2_000_000
+      interface_speed_bps: 2_000_000_000
+      processing_capacity_pps: 200000
+    distributed_mitigation:
+      scrubber1_id: "SW3" # Using GoodQueue (small pipe) for volumetric attack
+      scrubber2_id: "SW4"
+      scrubber_configs:
+        SW1: { type: "WidePipe", bandwidth_bps: 5_000_000_000, queue_max_bytes: 100_000 }
+        SW2: { type: "WidePipe", bandwidth_bps: 5_000_000_000, queue_max_bytes: 100_000 }
+        SW3: { type: "GoodQueue", bandwidth_bps: 500_000_000, queue_max_bytes: 2_000_000 }
+        SW4: { type: "GoodQueue", bandwidth_bps: 500_000_000, queue_max_bytes: 2_000_000 }
+    server_config:
+      queue_max_bytes: 500_000
+      link_to_switch_bw_bps: 10_000_000_000
+
+  - run_id: "Centralized_Attack_Style2"
+    duration_seconds: 30
+    scenario_type: "Centralized"
+    legitimate_traffic:
+      request_interval_ms: 50
+      request_size_bytes: 1024
+      reply_size_bytes: 4096
+      server_processing_delay_ms: 10
+    attack_traffic:
+      present: True
+      style: "ATTACK_STYLE_2"
+      num_total_attackers: 30
+      total_attack_pps: 30000 # Lower volume, high processing cost
+      attack_packet_size_bytes: 1024
+    network_links:
+      default_bandwidth_bps: 1_000_000_000
+      default_propagation_delay_ms: 0.1
+    firewall_centralized:
+      queue_max_bytes: 2_000_000
+      interface_speed_bps: 2_000_000_000
+      processing_capacity_pps: 200000
+    server_config:
+      queue_max_bytes: 500_000
+      link_to_switch_bw_bps: 1_000_000_000
+
+  - run_id: "Distributed_Style2_AdequateScrubbers"
+    duration_seconds: 30
+    scenario_type: "Distributed"
+    legitimate_traffic:
+      request_interval_ms: 50
+      request_size_bytes: 1024
+      reply_size_bytes: 4096
+      server_processing_delay_ms: 10
+    attack_traffic:
+      present: True
+      style: "ATTACK_STYLE_2"
+      num_total_attackers: 30
+      total_attack_pps: 30000
+      attack_packet_size_bytes: 1024
+    network_links:
+      default_bandwidth_bps: 10_000_000_000
+      default_propagation_delay_ms: 0.1
+    firewall_centralized:
+      queue_max_bytes: 2_000_000
+      interface_speed_bps: 2_000_000_000
+      processing_capacity_pps: 200000
+    distributed_mitigation:
+      scrubber1_id: "SW3" # GoodQueue is better for absorbing bursts
+      scrubber2_id: "SW4"
+      scrubber_configs:
+        SW1: { type: "WidePipe", bandwidth_bps: 5_000_000_000, queue_max_bytes: 100_000 }
+        SW2: { type: "WidePipe", bandwidth_bps: 5_000_000_000, queue_max_bytes: 100_000 }
+        SW3: { type: "GoodQueue", bandwidth_bps: 500_000_000, queue_max_bytes: 2_000_000 }
+        SW4: { type: "GoodQueue", bandwidth_bps: 500_000_000, queue_max_bytes: 2_000_000 }
+    server_config:
+      queue_max_bytes: 500_000
+      link_to_switch_bw_bps: 10_000_000_000
